@@ -4,11 +4,11 @@ var startBtn = document.querySelector('#startBttn');
 
 startBtn.addEventListener('click', function(event){
     document.getElementById('startScreen').remove();
-    //see if button works 
-
+    
+    //if works link to question 
     displayQuestion(questions[questionIndex]);
 
-   //if works link to question 
+   
 });
 
 
@@ -26,7 +26,7 @@ function countdown() {
    
         timeLeft--;
         
-        timerEl.textContent = timeLeft;
+        timerEl.textContent = "Timer: " +timeLeft;
         if (timeLeft < 1){
             clearInterval(timeInterval)
             msg();
@@ -76,4 +76,22 @@ var questions = [
 
 var questionIndex = 0;
 
+function displayQuestion(currentQuestion){
+
+    var title = document.createElement('h1');
+
+    title.append(currentQuestion.title);
+
+    document.getElementById('questionContainer').append(title);
+
+
+    for(var i =0; i < currentQuestion.options.length; i++){
+
+        var btn = document.createElement('button');
+
+        btn.append(currentQuestion.options[i]);
+
+        document.getElementById('questionContainer').append(btn);
+    }
+}
 
