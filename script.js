@@ -29,6 +29,7 @@ function countdown() {
         timerEl.textContent = timeLeft;
         if (timeLeft < 1){
             clearInterval(timeInterval)
+            msg();
         }
 
   }, 1000);
@@ -39,7 +40,7 @@ function countdown() {
 
 
 function msg() {
-  return message;
+  return timerEl.textContent =message;
 }
 
 countdown();
