@@ -1,8 +1,12 @@
 var startBtn = document.querySelector('#startBttn');
-startBtn.addEventListener('click', function(event){
 
+
+
+startBtn.addEventListener('click', function(event){
+    document.getElementById('startScreen').remove();
     //see if button works 
-   console.log('Button Clicked');
+
+    displayQuestion(questions[questionIndex]);
 
    //if works link to question 
 });
@@ -16,24 +20,23 @@ var message ="TIMES UP!";
 function countdown() {
   var timeLeft = 60;
 
-  console.log(timeLeft);
+//   console.log(timeLeft);
 
   var timeInterval = setInterval(function () {
-   for (var i=0; i<60;i++)   {
-    
-    if (timeLeft > 1) {
-        console.log("in if");
-        timerEl.textContent = timeLeft + ' seconds remaining';
+   
         timeLeft--;
-        console.log(timeLeft);
-    } 
-    else 
-      timerEl.textContent = '';
-      clearInterval(timeInterval);
-      msg();
-}
+        // document.getElementById(timer).textContent=timeLeft;
+        timerEl.textContent = timeLeft;
+        if (timeLeft < 1){
+            clearInterval(timeInterval)
+        }
+
   }, 1000);
 }
+
+
+
+
 
 function msg() {
   return message;
