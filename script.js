@@ -4,7 +4,7 @@ var startBtn = document.querySelector('#startBttn');
 
 startBtn.addEventListener('click', function(event){
     document.getElementById('startScreen').remove();
-    
+    countdown();
     //if works link to question 
     displayQuestion(questions[questionIndex]);
 
@@ -40,7 +40,7 @@ function msg() {
   return timerEl.textContent =message;
 }
 
-countdown();
+
 
 
 //code for questions 
