@@ -93,5 +93,38 @@ function displayQuestion(currentQuestion){
 
         document.getElementById('questionContainer').append(btn);
     }
+    // results();
+
+    btn.addEventListener('click', function(event){
+       
+        var correct = document.createElement('p');
+    
+        correct.textContent="Correct!";
+        document.getElementById('questionContainer').append(correct);
+        document.getElementById('questionContainer').remove();
+        questionIndex++;
+
+        //if works link to next question 
+        displayQuestion(currentQuestion);
+    
+       
+    });
 }
 
+// //function for answer buttons
+// function results(){
+//     console.log("in function");
+// btn.addEventListener('click', function(event){
+//     console.log("button clicked");
+//     var correct = document.createElement('p');
+
+//     correct.textContent("Correct!");
+//     document.getElementById('questionContainer').append(correct);
+//     document.querySelectorAll(displayQuestion(currentQuestion)).remove();
+//     questionIndex++;
+//     //if works link to question 
+//     displayQuestion(questions[questionIndex]);
+
+   
+// });
+// }
