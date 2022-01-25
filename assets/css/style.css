@@ -9,6 +9,7 @@ p{
 }
 #startBttn{
    margin-left: 48%;
+   color: black;
    background-color: chartreuse;
    font-weight: bold;
    font-size: 18px;
@@ -20,7 +21,17 @@ p{
     color: black;
 }
 #timer{
-    justify-content: right;
+    text-align: right;
     text-decoration: none;
     color: black;
+    top:0;
+    font-size: 12px;
+}
+button{
+    color: black;
+    background-color: chartreuse;
+    font-size: 15px;
+    margin-left: 50%;
+    margin-bottom: 1%;
+    width: max-content;
 }
