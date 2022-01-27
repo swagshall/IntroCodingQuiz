@@ -1,83 +1,77 @@
 var startBtn = document.querySelector('#startBttn');
-
-
-
-startBtn.addEventListener('click', function(event){
-    document.getElementById('startScreen').remove();
-    countdown();
-    //if works link to question 
-    displayQuestion(questions[questionIndex]);
-
-   
-});
-
-
+var timeLeft = 60;
+var questionIndex = [0];
+var score = 0;
+var btn;
 var timerEl = document.getElementById('timer');
-
-var message ="TIMES UP!";
-
-
-function countdown() {
-  var timeLeft = 60;
-
-//   console.log(timeLeft);
-
-  var timeInterval = setInterval(function () {
-   
-        timeLeft--;
-        
-        timerEl.textContent = "Timer: " +timeLeft;
-        if (timeLeft < 1){
-            clearInterval(timeInterval)
-            msg();
-        }
-
-  }, 1000);
-}
+var message = "TIMES UP!";
 
 
-function msg() {
-  return timerEl.textContent =message;
-}
-
-
-
-
-//code for questions 
 
 var questions = [
     {
         title: 'What does js stand for?',
-        options: ['python', 'java', 'ruby', 'javascript'],
+        option: ['python', 'java', 'ruby', 'javascript'],
         answer: 'javascript'
     },
     {
         title: 'What does html stand for?',
-        options: ['Hypertext Markup language ', 'Help Teach Me Languages', 'Idk ', 'Home Tool Markup Language '],
+        option: ['Hypertext Markup language ', 'Help Teach Me Languages', 'Idk ', 'Home Tool Markup Language '],
         answer: 'Hypertext Markup language '
     },
     {
         title: 'How do you display text in the console?',
-        options: ['console.display();', 'console.log();', 'log.console();', 'display.console();'],
+        option: ['console.display();', 'console.log();', 'log.console();', 'display.console();'],
         answer: 'console.log();'
     },
     {
         title: 'How do you comment out code in HTML?',
-        options: ['//comment', '<!comment>', '#comment', '<!--comment-->'],
+        option: ['//comment', '<!comment>', '#comment', '<!--comment-->'],
         answer: '<!--comment-->'
     },
     {
         title: 'Which tag is used to link to JavaScript from HTML?',
-        options: ['<a>', '<script>', '<link>', '<href>'],
+        option: ['<a>', '<script>', '<link>', '<href>'],
         answer: '<script>'
     }
 ]
 
 
-var questionIndex = 0;
+startBtn.addEventListener('click', function (event) {
+    document.getElementById('startScreen').remove();
+    countdown();
+    //if works link to question 
+    displayQuestion(questions[questionIndex]);
 
-function displayQuestion(currentQuestion){
 
+});
+
+
+
+function countdown() {
+    
+    var timeInterval = setInterval(function () {
+
+        timeLeft--;
+
+        timerEl.textContent = "Timer: " + timeLeft;
+        if (timeLeft < 1) {
+            clearInterval(timeInterval)
+            msg();
+        }
+
+    }, 1000);
+}
+
+
+function msg() {
+    return timerEl.textContent = message;
+}
+
+
+
+function displayQuestion(currentQuestion) {
+   
     var title = document.createElement('h1');
 
     title.append(currentQuestion.title);
@@ -85,46 +79,92 @@ function displayQuestion(currentQuestion){
     document.getElementById('questionContainer').append(title);
 
 
-    for(var i =0; i < currentQuestion.options.length; i++){
+    for(var i =0; i < currentQuestion.option.length; i++){
 
-        var btn = document.createElement('button');
+        btn = document.createElement('button');
+        // btn.textContent=currentQuestion.option[i];
 
-        btn.append(currentQuestion.options[i]);
+        btn.append(currentQuestion.option[i]);
 
         document.getElementById('questionContainer').append(btn);
+
+        btn.addEventListener("click", checkAns);
     }
-    // results();
-
-    btn.addEventListener('click', function(event){
-       
-        var correct = document.createElement('p');
-    
-        correct.textContent="Correct!";
-        document.getElementById('questionContainer').append(correct);
-        document.getElementById('questionContainer').remove();
-        questionIndex++;
-
-        //if works link to next question 
-        displayQuestion(currentQuestion);
-    
-       
-    });
 }
 
-// //function for answer buttons
-// function results(){
-//     console.log("in function");
-// btn.addEventListener('click', function(event){
-//     console.log("button clicked");
-//     var correct = document.createElement('p');
 
-//     correct.textContent("Correct!");
-//     document.getElementById('questionContainer').append(correct);
-//     document.querySelectorAll(displayQuestion(currentQuestion)).remove();
-//     questionIndex++;
-//     //if works link to question 
-//     displayQuestion(questions[questionIndex]);
+    function checkAns() {
+        
+    // btn.addEventListener('click', function (event) {
+    
+        if (btn.value!=questions.answer) {
+            console.log("wrong");
+            var incorrect = document.createElement('p');
+            incorrect.textContent = " Incorrect";
+            document.getElementById('questionContainer').append(incorrect);
+            timeLeft = timeLeft - 10;
+            // document.getElementById('answerContainer').remove();
+            document.getElementById('questionContainer').remove();
+            questionIndex=questionIndex+1;
+            console.log(questionIndex)
+            //if works link to next question 
+            displayQuestion(questions[questionIndex]);
+        }
+        else {
+           
+            var correctAns = document.createElement('p');
+            correctAns.textContent = "Correct!";
+            console.log(correctAns);
+            document.getElementById('questionContainer').append(correctAns);
+            // document.getElementById('answerContainer').remove();
+            document.getElementById('questionContainer').remove();
+            score = score + 10;
+            console.log(score);
+            questionIndex=questionIndex+1;
 
-   
-// });
+            //if works link to next question 
+            displayQuestion(questions[questionIndex]);
+        }
+    
+    
+    // });
+    
+
+    if (questionIndex = questions.length) {
+        document.getElementById('questionContainer').remove();
+        //call to score function
+        // score();
+    }
+    else if (timeLeft = 0) {
+        document.getElementById('questionContainer').remove();
+        //call to score function
+        // score();
+    }
+}
+
+
+// function score() {
+//     var finishedTitle = document.createElement('h1');
+
+//     finishedTitle.textContent = "Times up!"
+
+//     document.getElementById('questionContainer').append(finishedTitle);
+
+//     var total = document.createElement('h4');
+
+//     finishedTitle.textContent = "Your final score is: " + score;
+
+//     document.getElementById('questionContainer').append(total);
+
+
+//     var input = document.createElement('input');
+//     input.setAttribute("type", "text");
+
+//     input.textContent = "Enter initials: " + input;
+
+//     document.getElementById('questionContainer').append(input);
+
+//     var submitBtn = document.createElement('button');
+//     submitBtn.textContent = "Submit";
+//     document.getElementById('questionContainer').append(submitBtn);
 // }
