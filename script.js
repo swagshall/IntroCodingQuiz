@@ -1,7 +1,7 @@
 var startBtn = document.querySelector('#startBttn');
 var timeLeft = 60;
-var questionIndex = [0];
-var score = 0;
+var questionIndex = 0;
+var score = timeLeft;
 var btn;
 var timerEl = document.getElementById('timer');
 var message = "TIMES UP!";
@@ -40,38 +40,29 @@ var questions = [
 startBtn.addEventListener('click', function (event) {
     document.getElementById('startScreen').remove();
     countdown();
-    //if works link to question 
     displayQuestion(questions[questionIndex]);
-
 
 });
 
 
 
 function countdown() {
-    
     var timeInterval = setInterval(function () {
-
         timeLeft--;
-
         timerEl.textContent = "Timer: " + timeLeft;
         if (timeLeft < 1) {
-            clearInterval(timeInterval)
-            msg();
+            clearInterval(timeInterval);
+            scoreFunc();
         }
 
     }, 1000);
 }
 
 
-function msg() {
-    return timerEl.textContent = message;
-}
-
 
 
 function displayQuestion(currentQuestion) {
-   
+
     var title = document.createElement('h1');
 
     title.append(currentQuestion.title);
@@ -79,10 +70,9 @@ function displayQuestion(currentQuestion) {
     document.getElementById('questionContainer').append(title);
 
 
-    for(var i =0; i < currentQuestion.option.length; i++){
+    for (var i = 0; i < currentQuestion.option.length; i++) {
 
         btn = document.createElement('button');
-        // btn.textContent=currentQuestion.option[i];
 
         btn.append(currentQuestion.option[i]);
 
@@ -92,79 +82,82 @@ function displayQuestion(currentQuestion) {
     }
 }
 
+function checkAns(currentQuestion) {
 
-    function checkAns() {
-        
-    // btn.addEventListener('click', function (event) {
-    
-        if (btn.value!=questions.answer) {
-            console.log("wrong");
-            var incorrect = document.createElement('p');
-            incorrect.textContent = " Incorrect";
-            document.getElementById('questionContainer').append(incorrect);
-            timeLeft = timeLeft - 10;
-            // document.getElementById('answerContainer').remove();
-            document.getElementById('questionContainer').remove();
-            questionIndex=questionIndex+1;
-            console.log(questionIndex)
-            //if works link to next question 
-            displayQuestion(questions[questionIndex]);
-        }
-        else {
-           
-            var correctAns = document.createElement('p');
-            correctAns.textContent = "Correct!";
-            console.log(correctAns);
-            document.getElementById('questionContainer').append(correctAns);
-            // document.getElementById('answerContainer').remove();
-            document.getElementById('questionContainer').remove();
-            score = score + 10;
-            console.log(score);
-            questionIndex=questionIndex+1;
+    if (currentQuestion.btn = (currentQuestion.answer)) {
+        var correctAns = document.createElement('p');
+        correctAns.textContent = "Correct!";
+        console.log("right");
+        document.getElementById('questionContainer').append(correctAns);
 
-            //if works link to next question 
-            displayQuestion(questions[questionIndex]);
-        }
-    
-    
-    // });
-    
+        document.getElementById('questionContainer').remove();
+
+        nextQ(currentQuestion);
+
+    }
+    else {
+        console.log("wrong");
+        timeLeft = timeLeft - 10;
+        var incorrect = document.createElement('p');
+        incorrect.textContent = " Incorrect";
+        document.getElementById('questionContainer').append(incorrect);
+
+        document.getElementById('questionContainer').remove();
+        nextQ(currentQuestion);
+
+    }
+
+
 
     if (questionIndex = questions.length) {
         document.getElementById('questionContainer').remove();
         //call to score function
-        // score();
+        scoreFunc();
     }
     else if (timeLeft = 0) {
         document.getElementById('questionContainer').remove();
         //call to score function
-        // score();
+        scoreFunc();
     }
 }
 
-
-// function score() {
-//     var finishedTitle = document.createElement('h1');
-
-//     finishedTitle.textContent = "Times up!"
-
-//     document.getElementById('questionContainer').append(finishedTitle);
-
-//     var total = document.createElement('h4');
-
-//     finishedTitle.textContent = "Your final score is: " + score;
-
-//     document.getElementById('questionContainer').append(total);
+function nextQ() {
+    questionIndex++;
+    console.log(questionIndex)
+    displayQuestion(questions[questionIndex]);
+}
 
 
-//     var input = document.createElement('input');
-//     input.setAttribute("type", "text");
+function scoreFunc() {
+    //clear screen 
+    //document.getElementById('questionContainer').remove();
 
-//     input.textContent = "Enter initials: " + input;
+    var finishedTitle = document.createElement('h1');
+    var finalText = document.createTextNode("Times up!");
+    // finishedTitle.appendChild(finalText)
 
-//     document.getElementById('questionContainer').append(input);
+    finishedTitle.append(finalText);
+    // finishedTitle.textContent = "Times up!"
 
-//     var submitBtn = document.createElement('button');
-//     submitBtn.textContent = "Submit";
-//     document.getElementById('questionContainer').append(submitBtn);
-// }
+    document.getElementById('questionContainer').append(finishedTitle);
+
+    var total = document.createElement('h4');
+
+    total.textContent = "Your final score is: " + score;
+
+    document.getElementById('questionContainer').append(total);
+
+
+    var input = document.createElement('input');
+    input.setAttribute("type", "text");
+
+    input.textContent = "Enter initials: " + input;
+
+    document.getElementById('questionContainer').append(input);
+
+    var submitBtn = document.createElement('button');
+    submitBtn.textContent = "Submit";
+    document.getElementById('questionContainer').append(submitBtn);
+
+    //after they click the submit button they sld be bought to the high score pg 
+}
