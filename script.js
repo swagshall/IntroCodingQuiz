@@ -63,28 +63,33 @@ function countdown() {
 
 function displayQuestion(currentQuestion) {
 
-    var title = document.createElement('h1');
+    var titleQ =document.getElementById('qTitle')
+    // = document.createElement('h1');
 
-    title.append(currentQuestion.title);
-
-    document.getElementById('questionContainer').append(title);
+    titleQ.textContent=currentQuestion.title;
+    console.log(titleQ)
+    // document.getElementById('questionContainer').appendChild(titleQ);
+    
 
 
     for (var i = 0; i < currentQuestion.option.length; i++) {
 
         btn = document.createElement('button');
 
-        btn.append(currentQuestion.option[i]);
+        btn.textContent=currentQuestion.option[i];
+        btn.setAttribute('value', currentQuestion.option[i]);
 
         document.getElementById('questionContainer').append(btn);
 
-        btn.addEventListener("click", checkAns);
+        btn.addEventListener("click", checkAns(currentQuestion));
     }
 }
 
 function checkAns(currentQuestion) {
+    console.log(currentQuestion);
+    console.log(btn);
 
-    if (currentQuestion.btn = (currentQuestion.answer)) {
+    if (btn.value = currentQuestion.answer) {
         var correctAns = document.createElement('p');
         correctAns.textContent = "Correct!";
         console.log("right");
