@@ -5,6 +5,8 @@ var score = timeLeft;
 var btn;
 var timerEl = document.getElementById('timer');
 var message = "TIMES UP!";
+var name = localStorage.getItem('userName');
+var userScore = localStorage.getItem('score');
 
 
 
@@ -62,12 +64,20 @@ function countdown() {
 
 
 function displayQuestion(currentQuestion) {
+    var questionT = document.createElement('h1');
 
-    var titleQ =document.getElementById('qTitle')
-    // = document.createElement('h1');
+    //questionT.append(currentQuestion.title);
+    questionT.textContent=currentQuestion.title;
+    questionT.setAttribute('value', currentQuestion.title);
 
-    titleQ.textContent=currentQuestion.title;
-    console.log(titleQ)
+    document.getElementById('questionContainer').append(questionT);
+
+    // var titleQ =document.getElementById('qTitle')
+    // // = document.createElement('h1');
+
+    // titleQ.textContent=currentQuestion.title;
+    // //titleQ.setAttribute('value', currentQuestion.title);
+    // console.log(titleQ)
     // document.getElementById('questionContainer').appendChild(titleQ);
     
 
@@ -135,7 +145,7 @@ function nextQ() {
 
 function scoreFunc() {
     //clear screen 
-    //document.getElementById('questionContainer').remove();
+    document.getElementById('questionContainer').remove();
 
     var finishedTitle = document.createElement('h1');
     var finalText = document.createTextNode("Times up!");
@@ -157,6 +167,7 @@ function scoreFunc() {
     input.setAttribute("type", "text");
 
     input.textContent = "Enter initials: " + input;
+    localStorage.setItem("userName", input.value);
 
     document.getElementById('questionContainer').append(input);
 
