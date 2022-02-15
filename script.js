@@ -135,6 +135,8 @@ function scoreFunc() {
 
     input.textContent = "Enter initials: " + input;
     localStorage.setItem("userName", input.value);
+    localStorage.setItem("Score", total);
+
 
     document.getElementById('questionContainer').append(input);
 
@@ -149,5 +151,8 @@ function scoreFunc() {
     submitBtn.addEventListener('click', function (event) {
         console.log("submit btn pressed")
         document.getElementById('questionContainer').textContent="";
+        var userName= localStorage.getItem("userName");
+        var UserScore= localStorage.getItem("Score");
+    
     })
 }
